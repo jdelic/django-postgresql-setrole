@@ -25,11 +25,9 @@ Add `postgresql_setrole` to `INSTALLED_APPS`. Then in `settings.DATABASES` add
 
 ```python
 DATABASES = {
-    "DEFAULT": {
+    "default": {
         ...,  # other settings
-        "options": {
-            "set_role": "mydatabaseowner",
-        },
+        "SET_ROLE": "mydatabaseowner",
     }.
 }
 ```

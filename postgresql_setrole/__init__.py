@@ -9,19 +9,17 @@ from typing import Any, Type
 
 def setrole_connection(*, sender: Type[PostgreSQLDatabaseWrapper],
                        connection: PostgreSQLDatabaseWrapper, **kwargs: Any) -> None:
-    if "OPTIONS" in connection.settings_dict:
-        role = None
-        if "set_role" in connection.settings_dict["OPTIONS"]:
-            role = connection.settings_dict["OPTIONS"]["set_role"]
-        elif "SET_ROLE" in connection.settings_dict["OPTIONS"]:
-            role = connection.settings_dict["OPTIONS"]["SET_ROLE"]
+    role = None
+    if "set_role" in connection.settings_dict:
+        role = connection.settings_dict["set_role"]
+    elif "SET_ROLE" in connection.settings_dict:
+        role = connection.settings_dict["SET_ROLE"]
 
-        if role:
-            connection.cursor().execute("SET ROLE %s", (role,))
-        else:
-            warnings.warn("postgresql_setrole app is installed, but no SET_ROLE vaule is in database OPTIONS")
+    if role:
+        connection.cursor().execute("SET ROLE %s", (role,))
     else:
-        warnings.warn("postgresql_setrole app is installed, but no OPTIONS dict is in database settings")
+        warnings.warn("postgresql_setrole app is installed, but no SET_ROLE value is in settings.DATABASE")
+
 
 class DjangoPostgreSQLSetRoleApp(AppConfig):
     name = "postgresql_setrole"
