@@ -11,6 +11,8 @@ def setrole_connection(sender: PostgreSQLDatabaseWrapper, connection: 'psycopg2.
 
 
 class DjangoPostgreSQLSetRoleApp(AppConfig):
+    name = "postgresql_setrole"
+
     def ready(self) -> None:
         connection_created.connect(setrole_connection, sender=PostgreSQLDatabaseWrapper)
 

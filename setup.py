@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="django-postgresql-setrole",
-    version="1.0.0",
+    version="1.0.1",
     packages=["postgresql_setrole"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
