@@ -3,7 +3,7 @@ django-postgresql-setrole
 
 A Django application that executes `SET ROLE` on every connection to PostgreSQL
 opened by Django. This is useful if you're using external authentication
-managers like [Hashicorp Vault](http://vaultproject.io/).
+managers like `Hashicorp Vault <http://vaultproject.io/>`__\ .
 
 PostgreSQL's user model ("roles") assigns every object created in a database/
 tablespace/schema an "owner". Said owner is the *only* user that can modify or
@@ -23,14 +23,15 @@ How do I use this Django application?
 -------------------------------------
 Add `postgresql_setrole` to `INSTALLED_APPS`. Then in `settings.DATABASES` add
 
-```python
-DATABASES = {
-    "default": {
-        ...,  # other settings
-        "SET_ROLE": "mydatabaseowner",
-    }.
-}
-```
+.. code-block:: python
+
+    DATABASES = {
+        "default": {
+            ...,  # other settings
+            "SET_ROLE": "mydatabaseowner",
+        }.
+    }
+
 
 Why is SET ROLE necessary?
 --------------------------
@@ -45,31 +46,31 @@ How do I set this up?
 ---------------------
 On your shell as the `postgres` superuser:
 
-```
-# no create database
-# encrypt password
-# does not inherit rights
-# can't create roles
-# not a superuser
-createuser -D -E -I -L -R -S mydatabaseowner
-createdb -E utf8 -O mydatabaseowner mydatabase
-```
+.. code-block:: shell
+
+    # no create database
+    # encrypt password
+    # does not inherit rights
+    # can't create roles
+    # not a superuser
+    createuser -D -E -I -L -R -S mydatabaseowner
+    createdb -E utf8 -O mydatabaseowner mydatabase
 
 Then configure Vault to create roles like this:
 
-```
-$ vault mount -path=mydatabase-auth postgresql
-$ vault write vault write mydatabase-auth/roles/fullaccess sql=-
-CREATE ROLE "{{name}}" WITH LOGIN PASSWORD '{{password}}' VALID
-UNTIL '{{expiration}}' IN ROLE "mydatabaseowner" INHERIT NOCREATEROLE
-NOCREATEDB NOSUPERUSER NOREPLICATION NOBYPASSRLS;
-```
+.. code-block:: shell
+
+    $ vault mount -path=mydatabase-auth postgresql
+    $ vault write vault write mydatabase-auth/roles/fullaccess sql=-
+    CREATE ROLE "{{name}}" WITH LOGIN PASSWORD '{{password}}' VALID
+    UNTIL '{{expiration}}' IN ROLE "mydatabaseowner" INHERIT NOCREATEROLE
+    NOCREATEDB NOSUPERUSER NOREPLICATION NOBYPASSRLS;
 
 Then users created by Vault when they log in must run
 
-```
-SET ROLE "mydatabaseowner";
-```
+.. code-block:: sql
+
+    SET ROLE "mydatabaseowner";
 
 This ensures that all created tables and other objects belong to
 `mydatabaseowner`.
