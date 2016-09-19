@@ -1,10 +1,19 @@
 #!/usr/bin/env python
 # -* encoding: utf-8 *-
+import os
 from setuptools import setup
+
+HERE = os.path.dirname(__file__)
+
+try:
+    long_description = open(os.path.join(HERE, 'README.md')).read()
+except IOError:
+    long_description = None
+
 
 setup(
     name="django-postgresql-setrole",
-    version="1.0.4",
+    version="1.0.5",
     packages=["postgresql_setrole"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -20,4 +29,5 @@ setup(
     maintainer="GoPythonGo.com",
     maintainer_email="info@gopythongo.com",
     description="Execute SET ROLE on every PostgreSQL connection in the Django ORM",
+    long_description=long_description,
 )
