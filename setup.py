@@ -13,7 +13,7 @@ except IOError:
 
 setup(
     name="django-postgresql-setrole",
-    version="1.0.5",
+    version="1.0.6",
     packages=["postgresql_setrole"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -25,7 +25,7 @@ setup(
     ],
     url="https://github.com/jdelic/django-postgresql-setrole/",
     author="Jonas Maurus (@jdelic)",
-    author_email="jdelic-postgresql-setrole@gopythongo.com",
+    author_email="jonas-postgresql-setrole@gopythongo.com",
     maintainer="GoPythonGo.com",
     maintainer_email="info@gopythongo.com",
     description="Execute SET ROLE on every PostgreSQL connection in the Django ORM",
