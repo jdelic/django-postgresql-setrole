@@ -48,9 +48,18 @@ On your shell as the `postgres` superuser:
 
 .. code-block:: shell
 
+    # --- create an admin role for Vault
     # no create database
     # encrypt password
-    # does not inherit rights
+    # do not inherit rights
+    # can create roles
+    # not a superuser
+    createuser -D -E -I -l -r -S vaultadmin
+
+    # --- create an owner role for your database
+    # no create database
+    # encrypt password
+    # do not inherit rights
     # can't create roles
     # not a superuser
     createuser -D -E -I -L -R -S mydatabaseowner
