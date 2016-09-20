@@ -70,7 +70,7 @@ Then configure Vault to create roles like this:
 .. code-block:: shell
 
     $ vault mount -path=mydatabase-auth postgresql
-    $ vault write vault write mydatabase-auth/roles/fullaccess sql=-
+    $ vault write mydatabase-auth/roles/fullaccess sql=-
     CREATE ROLE "{{name}}" WITH LOGIN PASSWORD '{{password}}' VALID
     UNTIL '{{expiration}}' IN ROLE "mydatabaseowner" INHERIT NOCREATEROLE
     NOCREATEDB NOSUPERUSER NOREPLICATION NOBYPASSRLS;
