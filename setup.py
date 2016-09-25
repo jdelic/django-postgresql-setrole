@@ -13,14 +13,14 @@ except IOError:
 
 setup(
     name="django-postgresql-setrole",
-    version="1.0.6",
+    version="1.0.7",
     packages=["postgresql_setrole"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
         "Programming Language :: Python :: 3 :: Only",
-        "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+        "License :: OSI Approved :: BSD License",
         "Operating System :: POSIX",
     ],
     url="https://github.com/jdelic/django-postgresql-setrole/",
