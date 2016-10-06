@@ -70,10 +70,11 @@ Then configure Vault to create roles like this:
 .. code-block:: shell
 
     $ vault mount -path=mydatabase-auth postgresql
-    $ vault write mydatabase-auth/roles/fullaccess sql=-
-    CREATE ROLE "{{name}}" WITH LOGIN PASSWORD '{{password}}' VALID
-    UNTIL '{{expiration}}' IN ROLE "mydatabaseowner" INHERIT NOCREATEROLE
-    NOCREATEDB NOSUPERUSER NOREPLICATION NOBYPASSRLS;
+    $ vault write mydatabase-auth/roles/fullaccess -
+    {
+        "sql": "CREATE ROLE \"{{name}}\" WITH LOGIN ENCRYPTED PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' IN ROLE \"mydatabaseowner\" INHERIT NOCREATEROLE NOCREATEDB NOSUPERUSER NOREPLICATION NOBYPASSRLS;",
+        "revocation_sql": "DROP ROLE \"{{name}}\";"
+    }
 
 Then users created by Vault when they log in must run
 
