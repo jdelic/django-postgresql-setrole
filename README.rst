@@ -7,9 +7,9 @@ managers like `Hashicorp Vault <http://vaultproject.io/>`__\ .
 
 PostgreSQL's user model ("roles") assigns every object created in a database/
 tablespace/schema an "owner". Said owner is the *only* user that can modify or
-drop the object. This means that using a user leased from Vault that expires
-after a while can't be used to create or migrate tables unless you use the same
-user every time.
+drop the object. This means that user credentials leased from Vault which
+expire after some time, can't be used to create or migrate tables unless you 
+use the same user name every time (which would defeat the purpose).
 
 The solution is to create an "owner role". In layman's terms "a group that has
 all necessary permissions on the database and the INHERIT attribute and will
