@@ -13,7 +13,7 @@ except IOError:
 
 setup(
     name="django-postgresql-setrole",
-    version="1.0.7",
+    version="1.0.8",
     packages=["postgresql_setrole"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
