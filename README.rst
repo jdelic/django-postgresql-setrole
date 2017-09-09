@@ -8,7 +8,7 @@ managers like `Hashicorp Vault <http://vaultproject.io/>`__\ .
 PostgreSQL's user model ("roles") assigns every object created in a database/
 tablespace/schema an "owner". Said owner is the *only* user that can modify or
 drop the object. This means that user credentials leased from Vault which
-expire after some time, can't be used to create or migrate tables unless you 
+expire after some time, can't be used to create or migrate tables unless you
 use the same user name every time (which would defeat the purpose).
 
 The solution is to create an "owner role". In layman's terms "a group that has
@@ -69,11 +69,18 @@ Then configure Vault to create roles like this:
 
 .. code-block:: shell
 
-    $ vault mount -path=mydatabase-auth postgresql
-    $ vault write mydatabase-auth/roles/fullaccess -
+    $ vault mount -path=postgresql database
+    $ vault write postgresql/config/mydatabase \
+                      plugin_name=postgresql-database-plugin \
+                      allowed_roles="mydatabase_examplerole" \
+                      connection_url="postgresql://mydatapaseowner:[mydatabasepassword]@localhost:5432/"
+    $ vault write postgresql/roles/fullaccess -
     {
-        "sql": "CREATE ROLE \"{{name}}\" WITH LOGIN ENCRYPTED PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' IN ROLE \"mydatabaseowner\" INHERIT NOCREATEROLE NOCREATEDB NOSUPERUSER NOREPLICATION NOBYPASSRLS;",
-        "revocation_sql": "DROP ROLE \"{{name}}\";"
+        "db_name": "mydatabase",
+        "default_ttl": "10m",
+        "max_ttl": "1h",
+        "creation_statements": "CREATE ROLE \"{{name}}\" WITH LOGIN ENCRYPTED PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' IN ROLE \"mydatabaseowner\" INHERIT NOCREATEROLE NOCREATEDB NOSUPERUSER NOREPLICATION NOBYPASSRLS;",
+        "revocation_statements": "DROP ROLE \"name\";"
     }
 
 Then users created by Vault when they log in must run
