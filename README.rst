@@ -72,9 +72,9 @@ Then configure Vault to create roles like this:
     $ vault mount -path=postgresql database
     $ vault write postgresql/config/mydatabase \
                       plugin_name=postgresql-database-plugin \
-                      allowed_roles="mydatabase_examplerole" \
+                      allowed_roles="mydatabase_fullaccess" \
                       connection_url="postgresql://mydatapaseowner:[mydatabasepassword]@localhost:5432/"
-    $ vault write postgresql/roles/fullaccess -
+    $ vault write postgresql/roles/mydatabase_fullaccess -
     {
         "db_name": "mydatabase",
         "default_ttl": "10m",
