@@ -6,6 +6,9 @@ from django.db.backends.signals import connection_created
 from typing import Any, Type
 
 
+warning_given = False
+
+
 def setrole_connection(*, sender: Type[PostgreSQLDatabaseWrapper],
                        connection: PostgreSQLDatabaseWrapper, **kwargs: Any) -> None:
     global warning_given
